@@ -6,7 +6,7 @@ class HomePage {
   
     searchForProduct(product) {
       cy.get('[id="menuSearch"]').click();
-      cy.wait(3000); // Aguardar a pesquisa ser ativada
+      cy.wait(3000); 
       cy.get('#autoComplete').type("laptop");
     }
   

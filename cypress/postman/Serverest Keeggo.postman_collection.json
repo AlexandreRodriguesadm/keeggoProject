@@ -1,0 +1,366 @@
+{
+	"info": {
+		"_postman_id": "78f6475b-35d4-495d-8f95-30a7a757577d",
+		"name": "Serverest Keeggo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18569357"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "LoginAuth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verificar se não há campos vazios ou nulos\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"\r",
+									"    function verificarCampos(obj) {\r",
+									"        for (let key in obj) {\r",
+									"            const value = obj[key];\r",
+									"\r",
+									"            // Se o campo existe, ele não deve ser nulo\r",
+									"            if (value !== undefined) {\r",
+									"                pm.test(`Campo ${key} não deve ser nulo`, function () {\r",
+									"                    pm.expect(value).to.not.equal(null);\r",
+									"                });\r",
+									"\r",
+									"                // Se o campo for string, não deve ser vazio\r",
+									"                if (typeof value === 'string') {\r",
+									"                    pm.test(`Campo ${key} não deve ser uma string vazia`, function () {\r",
+									"                        pm.expect(value).to.not.be.empty;\r",
+									"                    });\r",
+									"                }\r",
+									"\r",
+									"                // Se o campo for um array, não deve ser vazio\r",
+									"                if (Array.isArray(value)) {\r",
+									"                    pm.test(`Campo ${key} não deve ser um array vazio`, function () {\r",
+									"                        pm.expect(value.length).to.be.above(0);\r",
+									"                    });\r",
+									"                }\r",
+									"            }\r",
+									"        }\r",
+									"    }\r",
+									"\r",
+									"    // Verifica se jsonData é um array ou um objeto único\r",
+									"    if (Array.isArray(jsonData)) {\r",
+									"        jsonData.forEach(item => {\r",
+									"            verificarCampos(item);\r",
+									"        });\r",
+									"    } else {\r",
+									"        verificarCampos(jsonData);\r",
+									"    }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"beltrano@qa.com.br\",\n  \"password\": \"teste\"\n}"
+						},
+						"url": {
+							"raw": "https://serverest.dev/login",
+							"protocol": "https",
+							"host": [
+								"serverest",
+								"dev"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListAllUsers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verificar se não há campos vazios ou nulos\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"\r",
+									"    function verificarCampos(obj) {\r",
+									"        for (let key in obj) {\r",
+									"            const value = obj[key];\r",
+									"\r",
+									"            // Se o campo existe, ele não deve ser nulo\r",
+									"            if (value !== undefined) {\r",
+									"                pm.test(`Campo ${key} não deve ser nulo`, function () {\r",
+									"                    pm.expect(value).to.not.equal(null);\r",
+									"                });\r",
+									"\r",
+									"                // Se o campo for string, não deve ser vazio\r",
+									"                if (typeof value === 'string') {\r",
+									"                    pm.test(`Campo ${key} não deve ser uma string vazia`, function () {\r",
+									"                        pm.expect(value).to.not.be.empty;\r",
+									"                    });\r",
+									"                }\r",
+									"\r",
+									"                // Se o campo for um array, não deve ser vazio\r",
+									"                if (Array.isArray(value)) {\r",
+									"                    pm.test(`Campo ${key} não deve ser um array vazio`, function () {\r",
+									"                        pm.expect(value.length).to.be.above(0);\r",
+									"                    });\r",
+									"                }\r",
+									"            }\r",
+									"        }\r",
+									"    }\r",
+									"\r",
+									"    // Verifica se jsonData é um array ou um objeto único\r",
+									"    if (Array.isArray(jsonData)) {\r",
+									"        jsonData.forEach(item => {\r",
+									"            verificarCampos(item);\r",
+									"        });\r",
+									"    } else {\r",
+									"        verificarCampos(jsonData);\r",
+									"    }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://serverest.dev/usuarios",
+							"protocol": "https",
+							"host": [
+								"serverest",
+								"dev"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RegisterUser",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Função para gerar um nome aleatório\r",
+									"function generateRandomName() {\r",
+									"    const firstNames = [\"Fulano\", \"Beltrano\", \"Ciclano\", \"João\", \"Maria\"];\r",
+									"    const lastNames = [\"da Silva\", \"Pereira\", \"Costa\", \"Oliveira\", \"Santos\"];\r",
+									"    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];\r",
+									"    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];\r",
+									"    return `${firstName} ${lastName}`;\r",
+									"}\r",
+									"\r",
+									"// Função para gerar um email aleatório\r",
+									"function generateRandomEmail() {\r",
+									"    const domains = [\"qa.com.br\", \"teste.com\", \"email.com\"];\r",
+									"    const username = Math.random().toString(36).substring(2, 11);\r",
+									"    const domain = domains[Math.floor(Math.random() * domains.length)];\r",
+									"    return `${username}@${domain}`;\r",
+									"}\r",
+									"\r",
+									"// Gerando valores aleatórios\r",
+									"const randomName = generateRandomName();\r",
+									"const randomEmail = generateRandomEmail();\r",
+									"\r",
+									"// Armazenando valores aleatórios nas variáveis de ambiente do Postman\r",
+									"pm.environment.set(\"randomName\", randomName);\r",
+									"pm.environment.set(\"randomEmail\", randomEmail);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verificar se não há campos vazios ou nulos\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"\r",
+									"    function verificarCampos(obj) {\r",
+									"        for (let key in obj) {\r",
+									"            const value = obj[key];\r",
+									"\r",
+									"            // Se o campo existe, ele não deve ser nulo\r",
+									"            if (value !== undefined) {\r",
+									"                pm.test(`Campo ${key} não deve ser nulo`, function () {\r",
+									"                    pm.expect(value).to.not.equal(null);\r",
+									"                });\r",
+									"\r",
+									"                // Se o campo for string, não deve ser vazio\r",
+									"                if (typeof value === 'string') {\r",
+									"                    pm.test(`Campo ${key} não deve ser uma string vazia`, function () {\r",
+									"                        pm.expect(value).to.not.be.empty;\r",
+									"                    });\r",
+									"                }\r",
+									"\r",
+									"                // Se o campo for um array, não deve ser vazio\r",
+									"                if (Array.isArray(value)) {\r",
+									"                    pm.test(`Campo ${key} não deve ser um array vazio`, function () {\r",
+									"                        pm.expect(value.length).to.be.above(0);\r",
+									"                    });\r",
+									"                }\r",
+									"            }\r",
+									"        }\r",
+									"    }\r",
+									"\r",
+									"    // Verifica se jsonData é um array ou um objeto único\r",
+									"    if (Array.isArray(jsonData)) {\r",
+									"        jsonData.forEach(item => {\r",
+									"            verificarCampos(item);\r",
+									"        });\r",
+									"    } else {\r",
+									"        verificarCampos(jsonData);\r",
+									"    }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"{{randomName}}\",\n  \"email\": \"{{randomEmail}}\",\n  \"password\": \"teste\",\n  \"administrador\": \"true\"\n}\n"
+						},
+						"url": {
+							"raw": "https://serverest.dev/usuarios",
+							"protocol": "https",
+							"host": [
+								"serverest",
+								"dev"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verificar se não há campos vazios ou nulos\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"\r",
+									"    function verificarCampos(obj) {\r",
+									"        for (let key in obj) {\r",
+									"            const value = obj[key];\r",
+									"\r",
+									"            // Se o campo existe, ele não deve ser nulo\r",
+									"            if (value !== undefined) {\r",
+									"                pm.test(`Campo ${key} não deve ser nulo`, function () {\r",
+									"                    pm.expect(value).to.not.equal(null);\r",
+									"                });\r",
+									"\r",
+									"                // Se o campo for string, não deve ser vazio\r",
+									"                if (typeof value === 'string') {\r",
+									"                    pm.test(`Campo ${key} não deve ser uma string vazia`, function () {\r",
+									"                        pm.expect(value).to.not.be.empty;\r",
+									"                    });\r",
+									"                }\r",
+									"\r",
+									"                // Se o campo for um array, não deve ser vazio\r",
+									"                if (Array.isArray(value)) {\r",
+									"                    pm.test(`Campo ${key} não deve ser um array vazio`, function () {\r",
+									"                        pm.expect(value.length).to.be.above(0);\r",
+									"                    });\r",
+									"                }\r",
+									"            }\r",
+									"        }\r",
+									"    }\r",
+									"\r",
+									"    // Verifica se jsonData é um array ou um objeto único\r",
+									"    if (Array.isArray(jsonData)) {\r",
+									"        jsonData.forEach(item => {\r",
+									"            verificarCampos(item);\r",
+									"        });\r",
+									"    } else {\r",
+									"        verificarCampos(jsonData);\r",
+									"    }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://serverest.dev/usuarios/0uxuPY0cbmQhpEz1",
+							"protocol": "https",
+							"host": [
+								"serverest",
+								"dev"
+							],
+							"path": [
+								"usuarios",
+								"0uxuPY0cbmQhpEz1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
